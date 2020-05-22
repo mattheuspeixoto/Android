@@ -7,22 +7,35 @@
     tools:context=".MainActivity">
 
     <ListView
-        android:id="@+id/list_oc"
+        android:id="@+id/list_ocorrencias"
         android:layout_width="409dp"
         android:layout_height="620dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/bt_novo"
+        android:id="@+id/bt_resolvidos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resolvidos"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.177"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.951" />
+
+    <Button
+        android:id="@+id/bt_novaocorr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Novo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.78"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.932" />
+        app:layout_constraintTop_toTopOf="@+id/list_ocorrencias"
+        app:layout_constraintVertical_bias="0.951" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

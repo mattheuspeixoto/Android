@@ -18,8 +18,8 @@ public class Resolucao extends AppCompatActivity {
 
     TextView titulo;
     TextView data;
-    Button salvar;
-    Button volta;
+    Button btsalvar_res;
+    Button btvoltar_res;
     TextView soluçao;
     Fato f;
     SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -31,8 +31,8 @@ public class Resolucao extends AppCompatActivity {
         //Faz o link com os elementos da Tela
         titulo = (TextView) findViewById(R.id.tv_res_titulo);
         data = (TextView) findViewById(R.id.tv_res_data);
-        salvar= (Button)findViewById(R.id.bt_res_salvar);
-        volta = (Button)findViewById(R.id.bt_res_voltar);
+        btsalvar_res= (Button)findViewById(R.id.bt_res_salvar);
+        btvoltar_res = (Button)findViewById(R.id.bt_res_voltar);
         soluçao = (TextView)findViewById(R.id.input_solucao_res2);
 
         //Recebe o objeto passado pela outra tela
@@ -43,29 +43,32 @@ public class Resolucao extends AppCompatActivity {
         data.setText(f.getDatacriacao());
 
         // Ações ao clicar no botao salvar
-        salvar.setOnClickListener(new View.OnClickListener() {
+        btsalvar_res.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String descricao = soluçao.getText().toString();
+
                 // Testa se o campo esta vazio
+                String descricao = soluçao.getText().toString();
                 if (TextUtils.isEmpty(descricao)) {
-                    soluçao.setError("Digite a solucao da ocorrencia");
-                    Toast.makeText(getApplicationContext(), "Vazio", Toast.LENGTH_LONG).show();
+                    soluçao.setError("Digite a solução da ocorrencia");
+                    Toast.makeText(getApplicationContext(), "Digite a solução da ocorrencia", Toast.LENGTH_LONG).show();
                     return;
                 }
                 // Passa a resolucao e a data para o objeto
-                String y = (String) out.format(new Date());
                 f.setResoluçao(descricao);
+                String y = (String) out.format(new Date());
                 f.setDataresolucao(y);
-                Log.d("Teste", f.toString());
+                salvar();
+                voltar();
             }});
 
-// Ações ao clicar no botao voltar
-     volta.setOnClickListener(new View.OnClickListener() {
+
+        // Ações ao clicar no botao voltar
+      btvoltar_res.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
          voltar();}
-         });
+      });
     }
 
     // Faz a troca das telas
@@ -74,4 +77,12 @@ public class Resolucao extends AppCompatActivity {
         startActivity(it);
         finish();
     }
+
+// ----------------------------M U D A R---Q U A N D O----C O N E C T A R---C O M---O---S E R V I D O R -------------------------------------------------------
+    public void salvar() {
+        Toast.makeText(getApplicationContext(), "Solução salva com sucesso", Toast.LENGTH_LONG).show(); // Mensagem ao usuario
+        Log.d("Teste", f.toStrings());
+    }
+// --------------------------------------------------------------------------------------------------------------------------------------------------
+
 }

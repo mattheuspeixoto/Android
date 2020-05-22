@@ -37,10 +37,10 @@
         android:text="Voltar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.238"
+        app:layout_constraintHorizontal_bias="0.256"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.758" />
+        app:layout_constraintVertical_bias="0.828" />
 
     <TextView
         android:id="@+id/tv_titulo"
@@ -97,10 +97,10 @@
         android:text="Resolver"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.808"
+        app:layout_constraintHorizontal_bias="0.771"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.758" />
+        app:layout_constraintVertical_bias="0.828" />
 
     <TextView
         android:id="@+id/textView9"
@@ -115,7 +115,7 @@
         app:layout_constraintVertical_bias="0.432" />
 
     <TextView
-        android:id="@+id/tv_dtcriacao"
+        android:id="@+id/dtcriacao_res"
         android:layout_width="246dp"
         android:layout_height="27dp"
         android:layout_marginStart="128dp"
@@ -127,4 +127,5 @@
         app:layout_constraintStart_toStartOf="@+id/textView7"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.311" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

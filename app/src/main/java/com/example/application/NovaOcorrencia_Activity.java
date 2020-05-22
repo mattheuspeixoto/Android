@@ -20,7 +20,7 @@ public class NovaOcorrencia_Activity extends AppCompatActivity {
     EditText titulo;
     Button salvar;
     Button cancelar;
-
+    Fato f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +43,21 @@ public class NovaOcorrencia_Activity extends AppCompatActivity {
                // Testa se o campo titulo esta vazio
                 if(TextUtils.isEmpty(t)){
                     titulo.setError("Digite o titulo da ocorrencia");
-                    Toast.makeText(getApplicationContext(), "Vazio", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Digite o titulo da ocorrencia", Toast.LENGTH_LONG).show();
                     return;
                 }
                 //Testa se o campo descricao esta vazio
                 if(TextUtils.isEmpty(descricao)){
                     desc.setError("Digite a descrição da ocorrencia");
-                    Toast.makeText(getApplicationContext(), "Vazio", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Digite a descrição da ocorrencia", Toast.LENGTH_LONG).show();
                     return;
                 }
 
+                SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                String datac = (String) out.format(new Date());
+                 f= new Fato("Mattheus",titulo.getText().toString(),desc.getText().toString(),datac); // Cria um objeto fato
                 salvar();
+                trocar();
             }
         });
 
@@ -66,21 +70,11 @@ public class NovaOcorrencia_Activity extends AppCompatActivity {
             }
         });
     }
-    private void salvar() {
-        SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        String datac = (String) out.format(new Date());
-        Fato f = new Fato("Mattheus",titulo.getText().toString(),desc.getText().toString(),datac); // Cria um objeto fato
-        Toast.makeText(getApplicationContext(), "Ocorrencia salva com sucesso", Toast.LENGTH_LONG).show(); // Mensagem ao usuario
-        //trocar(f); // Passa o objeto para o metodo de trocar tela
-        Log.d("Teste",f.toString());
-    }
 
-    //Troca a tela e passa o objeto
-    public void trocar(Fato f) {
-        Intent it = new Intent(this, MainActivity.class);
-        it.putExtra("Novo", f); // Passa o objeto para outra tela
-        startActivity(it);
-        finish();
+    // MUDAR AO CONECTAR COM O SERVIDOR
+    private void salvar() {
+        Toast.makeText(getApplicationContext(), "Ocorrencia salva com sucesso", Toast.LENGTH_LONG).show(); // Mensagem ao usuario
+        Log.d("Teste",f.toStrings());
     }
 
     //Troca a tela

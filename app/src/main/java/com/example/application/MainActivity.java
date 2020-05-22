@@ -2,13 +2,11 @@ package com.example.application;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,12 +15,17 @@ import java.util.List;
 
 //Tela Principal
 public class MainActivity extends AppCompatActivity {
+    List<Fato> ocorrencias;
+    ArrayAdapter<Fato> adaptador;
+
+    // Elementos da Tela
     ListView listagem ;
-    List<String> ocorrencias;
-    ArrayAdapter<String> adaptador;
-    //List<Fato> ocorrencia;
-    Button criar;
+    Button criar,resolvidos;
     Fato f;
+
+    // R E T I R A R   A O   C O N E C T A R   C O M   O   S E R V I D O R
+    Fato f1,f2,f3,x;
+    String datac;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,92 +33,91 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Faz o link com os Elementos da Tela
-        listagem = (ListView)findViewById(R.id.list_oc);
-        criar = (Button)findViewById(R.id.bt_novo);
+        listagem = (ListView)findViewById(R.id.list_ocorrencias);
+        criar = (Button)findViewById(R.id.bt_novaocorr);
+        resolvidos =(Button)findViewById(R.id.bt_resolvidos);
+
+        //Cria uma lista
+        ocorrencias = new ArrayList<Fato>();
+
+        //Formata a Data
+        SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
+        datac = (String) out.format(new Date());
 
 
-        /* // Foreach para receber os dados do servidor e colocar na listagem
-        for (:) {
-                      }        */
+        // Foreach para receber os dados do servidor e colocar na listagem
+        /*for (:) {
+              f = new Fato();
+              ocorrencias.add(f);
+         }
+         */
+
+// ----------------------------T I R A R --- Q U A N D O ---- C O N E C T A R --- C O M --- O --- S E R V I D O R -------------------------------------------------------
+        f = new Fato("Mattheus.Peixoto","Infiltração","Quando chove esta molhando a parede da escada ",datac);
+        f1 = new Fato("Eu","Barulho","Vizinho do apt 400 com som alto",datac);
+        f2 = new Fato("Eu","Lixo","O Lixo do bloco não foi retirado ",datac);
+        f3 = new Fato("Eu","Agua","Vazamento na pia do banheiro da suite apt 400",datac);
+        ocorrencias.add(f);
+        ocorrencias.add(f1);
+        ocorrencias.add(f2);
+        ocorrencias.add(f3);
+//-------------------------------------------------------------------------------------------------------------------------------------------
 
 
-       // Preenche o array com as ocorrencias
-        ocorrencias = new ArrayList<String>();
-        ocorrencias.add("Ocorrencia 1");
-        ocorrencias.add("Ocorrencia 2");
-        ocorrencias.add("Ocorrencia 3");
-        ocorrencias.add("Ocorrencia 4");
-        ocorrencias.add("Ocorrencia 5");
-        ocorrencias.add("Sobre");
-
-        SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        String datac = (String) out.format(new Date());
-
-
-        f = new Fato("Eu","Agua","Vazamento na pia do banheiro da suite apt 400",datac);
-
-
-        adaptador = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1,ocorrencias);
+        adaptador = new ArrayAdapter<Fato>(MainActivity.this, android.R.layout.simple_list_item_1,ocorrencias);
         listagem.setAdapter(adaptador);
 
         //Açoes ao Clicar em um item da Lista
         listagem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                switch (position) {
-                    case 0:
-                       exibirOcorrencia(f);
-                       break;
-                    case 1:
-                        // exibirOcorrencia();
-                        //Toast.makeText(getApplicationContext(), data.toString(), Toast.LENGTH_LONG).show();
-                        break;
-                    case 2:
-                        // exibirOcorrencia();
-                        Toast.makeText(getApplicationContext(), ocorrencias.get(position), Toast.LENGTH_LONG).show();
-                        break;
-                    case 3:
-                        // exibirOcorrencia();
-                        Toast.makeText(getApplicationContext(), ocorrencias.get(position), Toast.LENGTH_LONG).show();;
-                    case 4:
-                        // exibirOcorrencia();
-                        Toast.makeText(getApplicationContext(), ocorrencias.get(position), Toast.LENGTH_LONG).show();                        break;
-                    case 5:
-                        exibirSobre();
-                        break;
-                }
-
+                exibirOcorrencia(ocorrencias.get(position));  // passa o objeto da posicao selecionada
             }
         });
 
+        //Açoes ao clicar no botao criar
         criar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 novo();
             }
         });
+
+        //Açoes ao clicar no botao resolvidos
+        resolvidos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exibirResolvido();
+            }
+        });
+
+
 }
 
 // Troca de tela e passa o objeto
-    private void exibirOcorrencia(Fato f) {
+    private void exibirOcorrencia(Fato fato) {
         Intent it = new Intent(this, Desc_Ocorrencia_Activity.class);
-        it.putExtra("Fato",f);
+        it.putExtra("Ocorrencia",fato);
         startActivity(it);
         finish();
     }
 
-    // Troca de tela
-    private void exibirSobre() {
-        Intent it = new Intent(this, SobreActivity.class);
-        startActivity(it);
-        finish();
-    }
-
-    // Troca de tela
+// Chama a Tela de Cadastro de Ocorrencia
     public void novo(){
         Intent it = new Intent(this, NovaOcorrencia_Activity.class);
         startActivity(it);
         finish();
     }
+
+//Chama a Tela dos Resolvidos
+    private void exibirResolvido() {
+        Intent it = new Intent(this, Resolvidos_Activity.class);
+// ----------------------------T I R A R---Q U A N D O----C O N E C T A R---C O M---O---S E R V I D O R -------------------------------------------------------
+       x= new Fato("Mattheus Peixoto","Lampada Queimada","A lampada do Hall do 2 Andar do Bloco A  esta queimada desde ontem",datac);
+       it.putExtra("Resolvido",x);
+// -------------------------------------------------------------------------------------------------------------------------------
+       startActivity(it);
+       finish();
+    }
+
 }

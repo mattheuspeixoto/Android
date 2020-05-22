@@ -3,8 +3,6 @@ package com.example.application;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Date;
-
 public class Fato implements Parcelable {
     private String autor;
     private String tituto;
@@ -91,8 +89,8 @@ public class Fato implements Parcelable {
         this.dataresolucao = dataresolucao;
     }
 
-    @Override
-    public String toString() {
+
+    public String toStrings() {
         return "Fato{" +
                 "autor='" + autor + '\'' +
                 ",\n tituto='" + tituto + '\'' +
@@ -101,6 +99,13 @@ public class Fato implements Parcelable {
                 ",\n datacriacao='" + datacriacao + '\'' +
                 ",\n dataresolucao='" + dataresolucao + '\'' +
                 '}';
+    }
+
+    public String toString() {
+        return  "\nTituto: " + tituto  +"        "+
+                "\n\nAutor:  " + autor +
+                "\n\nData Criação: " + datacriacao+ "\n"
+                ;
     }
 
     @Override
