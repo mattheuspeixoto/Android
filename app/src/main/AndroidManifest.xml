@@ -10,6 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Resolucao"></activity>
+        <activity android:name=".Detalhes_Activity"></activity>
+        <activity android:name=".Resolvidos_Activity"></activity>
         <activity android:name=".NovaOcorrencia_Activity" />
         <activity android:name=".Desc_Ocorrencia_Activity" />
         <activity android:name=".SobreActivity" />
