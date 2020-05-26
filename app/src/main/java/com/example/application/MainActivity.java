@@ -7,25 +7,29 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import java.text.SimpleDateFormat;
+import com.google.gson.Gson;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import cz.msebera.android.httpclient.Header;
 
 //Tela Principal
 public class MainActivity extends AppCompatActivity {
+    private final String BASE_URL ="http://192.168.100.8/api/novos.php";
     List<Fato> ocorrencias;
     ArrayAdapter<Fato> adaptador;
 
-    // Elementos da Tela
+     // Elementos da Tela
     ListView listagem ;
     Button criar,resolvidos;
     Fato f;
-
-    // R E T I R A R   A O   C O N E C T A R   C O M   O   S E R V I D O R
-    Fato f1,f2,f3,x;
-    String datac;
+    String autor,titulo,descricao,datac;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,35 +41,9 @@ public class MainActivity extends AppCompatActivity {
         criar = (Button)findViewById(R.id.bt_novaocorr);
         resolvidos =(Button)findViewById(R.id.bt_resolvidos);
 
-        //Cria uma lista
-        ocorrencias = new ArrayList<Fato>();
-
-        //Formata a Data
-        SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
-        datac = (String) out.format(new Date());
-
-
-        // Foreach para receber os dados do servidor e colocar na listagem
-        /*for (:) {
-              f = new Fato();
-              ocorrencias.add(f);
-         }
-         */
-
-// ----------------------------T I R A R --- Q U A N D O ---- C O N E C T A R --- C O M --- O --- S E R V I D O R -------------------------------------------------------
-        f = new Fato("Mattheus.Peixoto","Infiltração","Quando chove esta molhando a parede da escada ",datac);
-        f1 = new Fato("Eu","Barulho","Vizinho do apt 400 com som alto",datac);
-        f2 = new Fato("Eu","Lixo","O Lixo do bloco não foi retirado ",datac);
-        f3 = new Fato("Eu","Agua","Vazamento na pia do banheiro da suite apt 400",datac);
-        ocorrencias.add(f);
-        ocorrencias.add(f1);
-        ocorrencias.add(f2);
-        ocorrencias.add(f3);
-//-------------------------------------------------------------------------------------------------------------------------------------------
-
-
-        adaptador = new ArrayAdapter<Fato>(MainActivity.this, android.R.layout.simple_list_item_1,ocorrencias);
-        listagem.setAdapter(adaptador);
+        ocorrencias = new ArrayList<Fato>(); // Cria a lista de fatos
+        Toast.makeText(getApplicationContext(), "Carregando ", Toast.LENGTH_LONG).show(); // Mensagem ao usuario
+        letsDoSomeNetworking(BASE_URL); // Metodo para receber o json
 
         //Açoes ao Clicar em um item da Lista
         listagem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -108,16 +86,50 @@ public class MainActivity extends AppCompatActivity {
         startActivity(it);
         finish();
     }
-
 //Chama a Tela dos Resolvidos
     private void exibirResolvido() {
         Intent it = new Intent(this, Resolvidos_Activity.class);
-// ----------------------------T I R A R---Q U A N D O----C O N E C T A R---C O M---O---S E R V I D O R -------------------------------------------------------
-       x= new Fato("Mattheus Peixoto","Lampada Queimada","A lampada do Hall do 2 Andar do Bloco A  esta queimada desde ontem",datac);
-       it.putExtra("Resolvido",x);
-// -------------------------------------------------------------------------------------------------------------------------------
-       startActivity(it);
-       finish();
+        startActivity(it);
+        finish();
     }
+// Adiciona os registros na lista da Tela
+    void preencher(JSONArray array){
+        Gson gson = new Gson();
+         try{
+            for(int i = 0; i < array.length(); i++){
+                JSONObject ob = array.getJSONObject(i);     // Pega os objetos Json dentro do Array
+                f = gson.fromJson(ob.toString(),Fato.class); // Cria um Objeto fato a partir do Json
+                ocorrencias.add(f);
+            }
+        }catch (JSONException e) {
+             e.printStackTrace();
+         }
+        adaptador = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1,ocorrencias);
+        listagem.setAdapter(adaptador);
+    }
+
+//Recebe os dados do Servidor
+    private void letsDoSomeNetworking(String url) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(url, new JsonHttpResponseHandler() {
+
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                if (response == null || response.length() == 0)
+                    Toast.makeText(getApplicationContext(), "Nenhuma Ocorrencia", Toast.LENGTH_LONG).show(); // Mensagem ao usuario
+                 else
+                    preencher(response);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+              System.out.println( "Request fail! Status code: " + statusCode);
+              System.out.println("Fail response: " + response);
+              System.out.println("Ocorrencia"+ e.toString());
+              Toast.makeText(getApplicationContext(), "Request fail! Status code: " + statusCode+"\nFail response: " + response+"\nOcorrencia"+ e.toString(), Toast.LENGTH_LONG).show(); // Mensagem ao usuario
+
+                }
+        });
+    }
+
+
 
 }

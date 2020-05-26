@@ -30,7 +30,7 @@ public class Detalhes_Activity extends AppCompatActivity {
         f = getIntent().getExtras().getParcelable("Resumo");
 
         //Seta os atributos do objeto nos elementos da tela
-        titulo.setText(f.getTituto());
+        titulo.setText(f.getTitulo());
         autor.setText(f.getAutor());
         data_criacao.setText(f.getDatacriacao());
         data_resolucao.setText(f.getDataresolucao());

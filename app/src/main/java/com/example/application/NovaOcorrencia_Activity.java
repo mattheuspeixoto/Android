@@ -10,9 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 // Tela de Cadastrar uma nova Ocorrencia
 
 public class NovaOcorrencia_Activity extends AppCompatActivity {
@@ -37,8 +34,8 @@ public class NovaOcorrencia_Activity extends AppCompatActivity {
         salvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               String descricao = desc.getText().toString();
-               String t = titulo.getText().toString();
+               String descricao =  desc.getText().toString();
+               String t =  titulo.getText().toString();
 
                // Testa se o campo titulo esta vazio
                 if(TextUtils.isEmpty(t)){
@@ -53,10 +50,7 @@ public class NovaOcorrencia_Activity extends AppCompatActivity {
                     return;
                 }
 
-                SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                String datac = (String) out.format(new Date());
-                 f= new Fato("Mattheus",titulo.getText().toString(),desc.getText().toString(),datac); // Cria um objeto fato
-                salvar();
+                salvar(t,descricao);
                 trocar();
             }
         });
@@ -72,7 +66,8 @@ public class NovaOcorrencia_Activity extends AppCompatActivity {
     }
 
     // MUDAR AO CONECTAR COM O SERVIDOR
-    private void salvar() {
+    private void salvar(String titulo , String desc) {
+        f =new Fato(titulo,desc,"Mattheus.Peixoto");
         Toast.makeText(getApplicationContext(), "Ocorrencia salva com sucesso", Toast.LENGTH_LONG).show(); // Mensagem ao usuario
         Log.d("Teste",f.toStrings());
     }

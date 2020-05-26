@@ -8,19 +8,26 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import java.text.SimpleDateFormat;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import cz.msebera.android.httpclient.Header;
 
 public class Resolvidos_Activity extends AppCompatActivity {
 
     ListView resolvidos;
     Button voltar;
-    String y;
     Fato f;
     List<Fato> ocorrencias;
     ArrayAdapter<Fato> adaptador;
+    private final String BASE_URL ="http://192.168.100.8/api/resolvidos.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,28 +38,13 @@ public class Resolvidos_Activity extends AppCompatActivity {
         voltar=(Button)findViewById(R.id.bt_resolvidos_voltar);
         resolvidos=(ListView)findViewById(R.id.list_resolvidos);
 
-        // Cria a uma lista de ocorrencias
-        ocorrencias = new ArrayList<Fato>();
 
-        // Foreach para receber os dados do servidor e colocar na listagem
-        /* for (:) {
-                  f = new Fato();
-                 ocorrencias.add(f);
-            }*/
+        ocorrencias = new ArrayList<Fato>();// Cria a uma lista de ocorrencias
+        Toast.makeText(getApplicationContext(), "Carregando ", Toast.LENGTH_LONG).show(); // Mensagem ao usuario
+        letsDoSomeNetworking(BASE_URL); // Metodo para receber o json
 
 
-// ----------------------------T I R A R --- Q U A N D O ---- C O N E C T A R --- C O M --- O --- S E R V I D O R -------------------------------------------------------
-        SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
-        y = (String) out.format(new Date());
-        f= getIntent().getExtras().getParcelable("Resolvido");
-        f.setResoluçao("Foi realizado a substituiçao da lampada");
-        f.setDataresolucao(y);
-        ocorrencias.add(f);
-// ------------------------------------------------------------------------------------------------------------------------------------------------
-
-      adaptador = new ArrayAdapter<>(Resolvidos_Activity.this, android.R.layout.simple_list_item_1,ocorrencias);
-      resolvidos.setAdapter(adaptador);
-      resolvidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        resolvidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 exibirResumo(ocorrencias.get(position));  // passa o objeto da posicao selecionada
@@ -79,4 +71,43 @@ public class Resolvidos_Activity extends AppCompatActivity {
         startActivity(it);
         finish();
     }
+
+//Mostra dados na Tela
+    void preencher(JSONArray array){
+        Gson gson = new Gson();
+        try {
+            for(int i = 0; i < array.length(); i++){
+                JSONObject ob = array.getJSONObject(i); // Pega os objetos Json dentro do Array
+                f = gson.fromJson(ob.toString(),Fato.class); // Cria um objeto Fato a partir do JSON
+                ocorrencias.add(f);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        adaptador = new ArrayAdapter<>(Resolvidos_Activity.this, android.R.layout.simple_list_item_1,ocorrencias);
+        resolvidos.setAdapter(adaptador);
+    }
+
+//Recebe os dados do Servidor
+    private void letsDoSomeNetworking(String url) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(url, new JsonHttpResponseHandler() {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                if(response == null || response.length() ==0)
+                    Toast.makeText(getApplicationContext(),"Nenhuma Ocorrencia" , Toast.LENGTH_LONG).show(); // Mensagem ao usuario
+                 else
+                    preencher(response);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                System.out.println( "Request fail! Status code: " + statusCode);
+                System.out.println("Fail response: " + response);
+                System.out.println("Ocorrencia"+ e.toString());
+                Toast.makeText(getApplicationContext(), "Request fail! Status code: " + statusCode+"\nFail response: " + response+"\nOcorrencia"+ e.toString(), Toast.LENGTH_LONG).show(); // Mensagem ao usuario
+            }
+        });
+    }
+
+
+
 }

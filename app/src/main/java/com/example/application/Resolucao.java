@@ -39,7 +39,7 @@ public class Resolucao extends AppCompatActivity {
         f= getIntent().getExtras().getParcelable("Resolver");
 
         // Passa os dados para a tela
-        titulo.setText(f.getTituto());
+        titulo.setText(f.getTitulo());
         data.setText(f.getDatacriacao());
 
         // Ações ao clicar no botao salvar

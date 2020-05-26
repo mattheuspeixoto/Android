@@ -37,7 +37,7 @@ public class Desc_Ocorrencia_Activity extends AppCompatActivity {
         // Seta os valores nos campos da tela
         descricao.setText(f.getDescricao());
         autor.setText(f.getAutor());
-        titulo.setText(f.getTituto());
+        titulo.setText(f.getTitulo());
         data_criacao.setText(f.getDatacriacao());
 
 
