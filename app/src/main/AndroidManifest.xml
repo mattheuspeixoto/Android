@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".NovoUsuario"></activity>
         <activity android:name=".Login_Activity" />
         <activity android:name=".Resolver_Activity" />
         <activity android:name=".Detalhes_Resolvidos_Activity" />
@@ -18,7 +19,7 @@
         <activity android:name=".CadastrarOcorrencia_Activity" />
         <activity android:name=".Detalhes_Novos_Activity" />
         <activity android:name=".SobreActivity" />
-        <activity android:name=".OcorrenciasNovas_Activity"/>
+        <activity android:name=".OcorrenciasNovas_Activity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

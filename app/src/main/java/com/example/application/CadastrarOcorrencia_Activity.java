@@ -1,10 +1,8 @@
 package com.example.application;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +23,7 @@ public class CadastrarOcorrencia_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nova);
+        setContentView(R.layout.activity_novaocorrencia);
 
         // Faz o link com os elementos da Tela
         descricao = (EditText)findViewById(R.id.input_descriçao);
