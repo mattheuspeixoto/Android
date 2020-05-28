@@ -4,25 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CadastrarOcorrencia_Activity">
+    tools:context=".Login_Activity">
 
 
     <EditText
-        android:id="@+id/input_descriçao"
+        android:id="@+id/input_password_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="Descrição"
+        android:inputType="textPassword"
+        android:hint="Senha"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
-        android:id="@+id/input_titulo"
+        android:id="@+id/input_user_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:hint="Titulo"
+        android:hint="Usuario"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.332"
@@ -32,7 +32,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nova Ocorrencia"
+        android:text="Login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.468"
@@ -44,7 +44,7 @@
         android:id="@+id/bt_votar_res"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Salvar"
+        android:text="Entrar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.817"

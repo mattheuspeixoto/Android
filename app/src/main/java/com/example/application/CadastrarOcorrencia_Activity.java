@@ -1,6 +1,7 @@
 package com.example.application;
 
-import android.content.Intent;
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,12 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 // Tela de Cadastrar uma nova Ocorrencia
 
-public class NovaOcorrencia_Activity extends AppCompatActivity {
-    EditText desc;
+public class CadastrarOcorrencia_Activity extends AppCompatActivity {
+    EditText descricao;
     EditText titulo;
     Button salvar;
     Button cancelar;
     Fato f;
+    TrocarTela troca = new TrocarTela();
+    Activity activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,16 +28,17 @@ public class NovaOcorrencia_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_nova);
 
         // Faz o link com os elementos da Tela
-        desc = (EditText)findViewById(R.id.input_descriçao);
+        descricao = (EditText)findViewById(R.id.input_descriçao);
         salvar = (Button)findViewById(R.id.bt_votar_res);
         cancelar =(Button)findViewById(R.id.bt_cancelar);
         titulo = (EditText) findViewById(R.id.input_titulo) ;
+        titulo.requestFocus();
 
         // Ações ao clicar no botao salvar
         salvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               String descricao =  desc.getText().toString();
+               String d =  descricao.getText().toString();
                String t =  titulo.getText().toString();
 
                // Testa se o campo titulo esta vazio
@@ -44,14 +48,15 @@ public class NovaOcorrencia_Activity extends AppCompatActivity {
                     return;
                 }
                 //Testa se o campo descricao esta vazio
-                if(TextUtils.isEmpty(descricao)){
-                    desc.setError("Digite a descrição da ocorrencia");
+                if(TextUtils.isEmpty(d)){
+                    descricao.setError("Digite a descrição da ocorrencia");
                     Toast.makeText(getApplicationContext(), "Digite a descrição da ocorrencia", Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                salvar(t,descricao);
-                trocar();
+                salvar(t,d);
+               troca.trocar(activity, OcorrenciasNovas_Activity.class);
+                finish();
             }
         });
 
@@ -59,8 +64,10 @@ public class NovaOcorrencia_Activity extends AppCompatActivity {
         cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                desc.setText("");
-                trocar();
+                descricao.setText("");
+                troca.trocar(activity, OcorrenciasNovas_Activity.class);
+                finish();
+
             }
         });
     }
@@ -68,16 +75,11 @@ public class NovaOcorrencia_Activity extends AppCompatActivity {
     // MUDAR AO CONECTAR COM O SERVIDOR
     private void salvar(String titulo , String desc) {
         f =new Fato(titulo,desc,"Mattheus.Peixoto");
-        Toast.makeText(getApplicationContext(), "Ocorrencia salva com sucesso", Toast.LENGTH_LONG).show(); // Mensagem ao usuario
-        Log.d("Teste",f.toStrings());
+        Toast.makeText(getApplicationContext(), "Ocorrencia salva com sucesso", Toast.LENGTH_SHORT).show(); // Mensagem ao usuario
+
+
     }
 
-    //Troca a tela
-    public void trocar(){
-        Intent it = new Intent(this,MainActivity.class);
-        startActivity(it);
-        finish();
 
-        }
     }
 

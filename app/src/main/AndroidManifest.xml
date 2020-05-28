@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.application">
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,12 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Resolucao" />
-        <activity android:name=".Detalhes_Activity" />
-        <activity android:name=".Resolvidos_Activity" />
-        <activity android:name=".NovaOcorrencia_Activity" />
-        <activity android:name=".Desc_Ocorrencia_Activity" />
+        <activity android:name=".Login_Activity" />
+        <activity android:name=".Resolver_Activity" />
+        <activity android:name=".Detalhes_Resolvidos_Activity" />
+        <activity android:name=".OcorrenciasResolvidas_Activity" />
+        <activity android:name=".CadastrarOcorrencia_Activity" />
+        <activity android:name=".Detalhes_Novos_Activity" />
         <activity android:name=".SobreActivity" />
+        <activity android:name=".OcorrenciasNovas_Activity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

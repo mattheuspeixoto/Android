@@ -2,12 +2,15 @@ package com.example.application;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 public class SobreActivity extends AppCompatActivity {
+    TrocarTela troca = new TrocarTela();
+    Activity activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,14 +22,12 @@ public class SobreActivity extends AppCompatActivity {
         voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                voltar();
+                troca.trocar(activity, OcorrenciasNovas_Activity.class);
+                finish();
             }
         });
     }
 
-    private void voltar() {
-        Intent it = new Intent(this,MainActivity.class);
-        startActivity(it);
-        finish();
+
     }
-}
+

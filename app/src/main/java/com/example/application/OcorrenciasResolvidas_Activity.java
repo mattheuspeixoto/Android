@@ -1,15 +1,16 @@
 package com.example.application;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -20,13 +21,17 @@ import java.util.ArrayList;
 import java.util.List;
 import cz.msebera.android.httpclient.Header;
 
-public class Resolvidos_Activity extends AppCompatActivity {
-
+// Tela das Ocorrencias Ja finalizadas
+public class OcorrenciasResolvidas_Activity extends AppCompatActivity {
     ListView resolvidos;
+    ProgressBar progress;
+    TextView texto;
     Button voltar;
     Fato f;
     List<Fato> ocorrencias;
     ArrayAdapter<Fato> adaptador;
+    TrocarTela troca = new TrocarTela();
+    Activity activity = this;
     private final String BASE_URL ="http://192.168.100.8/api/resolvidos.php";
 
     @Override
@@ -37,40 +42,37 @@ public class Resolvidos_Activity extends AppCompatActivity {
         //Link com os elementos da tela
         voltar=(Button)findViewById(R.id.bt_resolvidos_voltar);
         resolvidos=(ListView)findViewById(R.id.list_resolvidos);
+        progress = (ProgressBar) findViewById(R.id.progress);
+        texto = (TextView) findViewById(R.id.texto);
 
 
         ocorrencias = new ArrayList<Fato>();// Cria a uma lista de ocorrencias
-        Toast.makeText(getApplicationContext(), "Carregando ", Toast.LENGTH_LONG).show(); // Mensagem ao usuario
+        //Toast.makeText(getApplicationContext(), "Carregando ", Toast.LENGTH_LONG).show(); // Mensagem ao usuario
         letsDoSomeNetworking(BASE_URL); // Metodo para receber o json
+        new MinhaTask(this,progress,texto,resolvidos).execute();
 
 
+        //Quando Seleciana uma Ocorrencia da Lista
         resolvidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                exibirResumo(ocorrencias.get(position));  // passa o objeto da posicao selecionada
-            }
+               // exibirResumo(ocorrencias.get(position));  // passa o objeto da posicao selecionada
+                troca.trocarPassandoObjeto(activity, Detalhes_Resolvidos_Activity.class,ocorrencias.get(position),"OcorrenciaResolvida");
+                 finish();
+                            }
         });
 
         voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                voltar();
+               troca.trocar(activity, OcorrenciasNovas_Activity.class);
+               finish();
+
+
             }
         });
     }
 
-    private void voltar() {
-        Intent it = new Intent(this, MainActivity.class);
-        startActivity(it);
-        finish();
-    }
-
-    private void exibirResumo(Fato fato) {
-        Intent it = new Intent(this, Detalhes_Activity.class);
-        it.putExtra("Resumo",fato);
-        startActivity(it);
-        finish();
-    }
 
 //Mostra dados na Tela
     void preencher(JSONArray array){
@@ -83,10 +85,13 @@ public class Resolvidos_Activity extends AppCompatActivity {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }
-        adaptador = new ArrayAdapter<>(Resolvidos_Activity.this, android.R.layout.simple_list_item_1,ocorrencias);
+            }
+        adaptador = new ArrayAdapter<>(OcorrenciasResolvidas_Activity.this, android.R.layout.simple_list_item_1,ocorrencias);
         resolvidos.setAdapter(adaptador);
     }
+
+
+
 
 //Recebe os dados do Servidor
     private void letsDoSomeNetworking(String url) {

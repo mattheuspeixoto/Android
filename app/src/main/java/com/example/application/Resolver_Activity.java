@@ -2,7 +2,8 @@ package com.example.application;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,13 +15,12 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Resolucao extends AppCompatActivity {
+public class Resolver_Activity extends AppCompatActivity {
 
-    TextView titulo;
-    TextView data;
-    Button btsalvar_res;
-    Button btvoltar_res;
-    TextView soluçao;
+    TextView titulo, data,soluçao;;
+    Button btsalvar_res, btvoltar_res;
+    TrocarTela troca = new TrocarTela();
+    Activity activity = this;
     Fato f;
     SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     @Override
@@ -55,11 +55,12 @@ public class Resolucao extends AppCompatActivity {
                     return;
                 }
                 // Passa a resolucao e a data para o objeto
-                f.setResoluçao(descricao);
+                f.setReSolucao(descricao);
                 String y = (String) out.format(new Date());
                 f.setDataresolucao(y);
                 salvar();
-                voltar();
+                troca.trocar(activity, OcorrenciasNovas_Activity.class);
+                finish();
             }});
 
 
@@ -67,16 +68,13 @@ public class Resolucao extends AppCompatActivity {
       btvoltar_res.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-         voltar();}
+            troca.trocar(activity, OcorrenciasNovas_Activity.class);
+            finish();
+
+        }
       });
     }
 
-    // Faz a troca das telas
-    public void voltar(){
-        Intent it = new Intent(this, MainActivity.class);
-        startActivity(it);
-        finish();
-    }
 
 // ----------------------------M U D A R---Q U A N D O----C O N E C T A R---C O M---O---S E R V I D O R -------------------------------------------------------
     public void salvar() {

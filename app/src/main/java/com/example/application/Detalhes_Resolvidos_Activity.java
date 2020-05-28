@@ -1,16 +1,21 @@
 package com.example.application;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
+
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class Detalhes_Activity extends AppCompatActivity {
+//Detalhes da Ocorrencia
+public class Detalhes_Resolvidos_Activity extends AppCompatActivity {
     TextView titulo,autor,data_criacao,data_resolucao,descricao,solucao;
     Button btvoltar;
     Fato f;
+    TrocarTela troca = new TrocarTela();
+    Activity activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +32,7 @@ public class Detalhes_Activity extends AppCompatActivity {
         btvoltar = (Button) findViewById(R.id.bt_voltar);
 
         //Recebe o objeto passado por outras telas
-        f = getIntent().getExtras().getParcelable("Resumo");
+        f = getIntent().getExtras().getParcelable("OcorrenciaResolvida");
 
         //Seta os atributos do objeto nos elementos da tela
         titulo.setText(f.getTitulo());
@@ -35,21 +40,17 @@ public class Detalhes_Activity extends AppCompatActivity {
         data_criacao.setText(f.getDatacriacao());
         data_resolucao.setText(f.getDataresolucao());
         descricao.setText(f.getDescricao());
-        solucao.setText(f.getResoluçao());
+        solucao.setText(f.getReSolucao());
 
         //Ação do botao voltar
         btvoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                trocar();
+              troca.trocar(activity, OcorrenciasNovas_Activity.class);
+              finish();
             }
         });
     }
 
-    private void trocar() {
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
-        finish();
 
-    }
 }

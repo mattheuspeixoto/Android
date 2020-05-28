@@ -9,7 +9,7 @@ public class Fato implements Parcelable {
     private String Titulo;
     private String Descricao;
     private String Data_Criacao;
-    private String Soluçao;
+    private String Solucao;
     private String Data_Solucao;
     private String Autor;
 
@@ -24,7 +24,7 @@ public class Fato implements Parcelable {
         Autor = in.readString();
         Titulo = in.readString();
         Descricao = in.readString();
-        Soluçao = in.readString();
+        Solucao = in.readString();
         Data_Criacao = in.readString();
         Data_Solucao = in.readString();
     }
@@ -42,7 +42,7 @@ public class Fato implements Parcelable {
                 ", autor='" + Autor + '\'' +
                 ", Titulo='" + Titulo + '\'' +
                 ", descricao='" + Descricao + '\'' +
-                ", resoluçao='" + Soluçao + '\'' +
+                ", reSolucao='" + Solucao + '\'' +
                 ", Data_Criacao='" + Data_Criacao + '\'' +
                 ", Data_Solucao='" + Data_Solucao + '\'' +
                 '}';
@@ -71,7 +71,7 @@ public class Fato implements Parcelable {
         dest.writeString(Autor);
         dest.writeString(Titulo);
         dest.writeString(Descricao);
-        dest.writeString(Soluçao);
+        dest.writeString(Solucao);
         dest.writeString(Data_Criacao);
         dest.writeString(Data_Solucao);
     }
@@ -108,12 +108,12 @@ public class Fato implements Parcelable {
         this.Descricao = descricao;
     }
 
-    public String getResoluçao() {
-        return Soluçao;
+    public String getReSolucao() {
+        return Solucao;
     }
 
-    public void setResoluçao(String resoluçao) {
-        this.Soluçao = resoluçao;
+    public void setReSolucao(String reSolucao) {
+        this.Solucao = reSolucao;
     }
 
     public String getDatacriacao() {
