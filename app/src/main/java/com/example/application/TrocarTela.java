@@ -18,4 +18,9 @@ public class TrocarTela {
         activity.startActivity(it);
         activity.finish();
     }
+
+    public void sair(Activity activity){
+      activity.finish();
+
+    }
 }

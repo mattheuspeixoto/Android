@@ -105,6 +105,7 @@ public class NovoUsuario extends AppCompatActivity {
     }
 
     private void salvar() {
+        Toast.makeText(getApplicationContext(), "Salvo com Sucesso", Toast.LENGTH_SHORT).show();
     }
 
     public final static boolean isValidEmail(CharSequence target) {

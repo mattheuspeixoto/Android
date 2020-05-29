@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ListView;
@@ -19,22 +20,34 @@ public class MinhaTask extends AsyncTask<Object, Object, String> {
     private Activity activity;
     private  ListView l ;
     TrocarTela troca = new TrocarTela();
+    private Class<?> cls = null;
     private int total = 0;
     private static int PROGRESSO = 10; // Incremento da barra
 
+    // Construtor para as telas de Ocorrencias novas e Resolvidas
     public MinhaTask(Activity context, ProgressBar progressBar, TextView texto, ListView l) {
         this.progressBar = progressBar;
         this.texto = texto;
         this.l = l;
         this.activity = context;
-       }
+          }
+
+   // Construtor para a Tela de Sair
+    public MinhaTask(Activity context, ProgressBar progressBar, TextView texto,Class<?> cls) {
+        this.progressBar = progressBar;
+        this.texto = texto;
+        this.l =null;
+        this.activity = context;
+        this.cls = cls;}
+
+
+    // Construtor para a Tela de Login
     public MinhaTask(Activity context, ProgressBar progressBar, TextView texto) {
         this.progressBar = progressBar;
         this.texto = texto;
         this.l =null;
         this.activity = context;
-
-    }
+        }
 
     @Override
     // estado inicial
@@ -79,9 +92,15 @@ public class MinhaTask extends AsyncTask<Object, Object, String> {
         texto.setText("Tarefa concluída");
         texto.setGravity(Gravity.CENTER_HORIZONTAL);
         texto.setVisibility(texto.INVISIBLE);
-        if(l == null) // Se for nulo é a tela inicial
-            troca.trocar(activity,Login_Activity.class);
-        else      // É a tela das Ocorrencias Novas ou a de Ocorrencias Resolvidas
+        if(l == null) { // Se for nulo é a tela inicial ou a de sair
+
+            if(cls!= null){  // tela de sair
+                activity.finish();
+            }else // Tela inicial
+                troca.trocar(activity, Login_Activity.class);
+
+
+        }else      // É a tela das Ocorrencias Novas ou a de Ocorrencias Resolvidas
             l.setVisibility(View.VISIBLE);
         super.onPostExecute(result);}
 

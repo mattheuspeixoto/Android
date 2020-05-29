@@ -33,7 +33,7 @@ public class Login_Activity extends AppCompatActivity {
         login = (EditText) findViewById(R.id.input_user_login) ;
         login.requestFocus();
 
-        Log.i("TesteActivity","Activity"+activity.toString());
+
 
         // Ações ao clicar no botao salvar
         entrar.setOnClickListener(new View.OnClickListener() {

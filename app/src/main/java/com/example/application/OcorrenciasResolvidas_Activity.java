@@ -57,7 +57,7 @@ public class OcorrenciasResolvidas_Activity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                // exibirResumo(ocorrencias.get(position));  // passa o objeto da posicao selecionada
-                troca.trocarPassandoObjeto(activity, Detalhes_Resolvidos_Activity.class,ocorrencias.get(position),"OcorrenciaResolvida");
+              troca.trocarPassandoObjeto(activity,Detalhes_Resolvidos_Activity.class,ocorrencias.get(position),"OcorrenciaResolvida");
                  finish();
                             }
         });

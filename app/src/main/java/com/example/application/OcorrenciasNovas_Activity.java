@@ -30,7 +30,7 @@ public class OcorrenciasNovas_Activity extends AppCompatActivity {
 
     // Elementos da Tela
     ListView listagem;
-    Button criar, resolvidos;
+    Button criar, resolvidos,sair;
     Fato f;
     ProgressBar progress;
     TextView texto;
@@ -49,13 +49,14 @@ public class OcorrenciasNovas_Activity extends AppCompatActivity {
         resolvidos = (Button) findViewById(R.id.bt_resolvidos);
         progress = (ProgressBar) findViewById(R.id.progress);
         texto = (TextView) findViewById(R.id.texto);
+        sair = (Button) findViewById(R.id.bt_sair);
 
         ocorrencias = new ArrayList<Fato>(); // Cria a lista de fatos
        // Toast.makeText(getApplicationContext(), "Carregando ", Toast.LENGTH_LONG).show(); // Mensagem ao usuario
         listagem.setVisibility(View.INVISIBLE);
         letsDoSomeNetworking(BASE_URL);
         new MinhaTask(this,progress,texto,listagem).execute();
-        //listagem.setVisibility(View.VISIBLE);
+
 
 
         //Açoes ao Clicar em um item da Lista
@@ -84,6 +85,13 @@ public class OcorrenciasNovas_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 troca.trocar(activity, OcorrenciasResolvidas_Activity.class);
                 finish();
+            }
+        });
+
+        sair.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                troca.trocar(activity,SairActivity.class);
             }
         });
     }
