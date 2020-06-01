@@ -1,18 +1,13 @@
 package com.example.application;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
-    TrocarTela troca = new TrocarTela();
-    Activity activity= this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,9 +18,7 @@ public class MainActivity extends AppCompatActivity {
         TextView texto = (TextView) findViewById(R.id.texto);
         texto.setVisibility(texto.INVISIBLE);
 
-        new MinhaTask( this, progress,texto).execute();
-       // troca.trocar(c,Login_Activity.class);
-        //finish();
+        new MinhaTask(this, progress,texto).execute();
 
     }
 

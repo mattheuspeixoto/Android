@@ -1,13 +1,11 @@
 package com.example.application;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
 
 //Detalhes da Ocorrencia
 public class Detalhes_Resolvidos_Activity extends AppCompatActivity {
@@ -46,7 +44,7 @@ public class Detalhes_Resolvidos_Activity extends AppCompatActivity {
         btvoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              troca.trocar(activity, OcorrenciasNovas_Activity.class);
+              troca.trocar(activity, OcorrenciasResolvidas_Activity.class);
               finish();
             }
         });

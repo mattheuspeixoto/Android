@@ -12,10 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 // Tela de Cadastrar uma nova Ocorrencia
 
 public class CadastrarOcorrencia_Activity extends AppCompatActivity {
-    EditText descricao;
-    EditText titulo;
-    Button salvar;
-    Button cancelar;
+    EditText descricao,titulo;
+    Button salvar,cancelar;
     Fato f;
     TrocarTela troca = new TrocarTela();
     Activity activity = this;
@@ -52,9 +50,7 @@ public class CadastrarOcorrencia_Activity extends AppCompatActivity {
                     return;
                 }
 
-                salvar(t,d);
-               troca.trocar(activity, OcorrenciasNovas_Activity.class);
-                finish();
+                new NovaOcorrencia(activity,descricao.getText().toString(),titulo.getText().toString(),"Mattheus Peixoto").execute();
             }
         });
 
@@ -68,16 +64,7 @@ public class CadastrarOcorrencia_Activity extends AppCompatActivity {
 
             }
         });
-    }
-
-    // MUDAR AO CONECTAR COM O SERVIDOR
-    private void salvar(String titulo , String desc) {
-        f =new Fato(titulo,desc,"Mattheus.Peixoto");
-        Toast.makeText(getApplicationContext(), "Ocorrencia salva com sucesso", Toast.LENGTH_SHORT).show(); // Mensagem ao usuario
+    }}
 
 
-    }
-
-
-    }
 

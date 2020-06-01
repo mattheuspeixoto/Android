@@ -1,19 +1,14 @@
 package com.example.application;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.appcompat.app.AppCompatActivity;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Resolver_Activity extends AppCompatActivity {
 
@@ -53,34 +48,24 @@ public class Resolver_Activity extends AppCompatActivity {
                     soluçao.setError("Digite a solução da ocorrencia");
                     Toast.makeText(getApplicationContext(), "Digite a solução da ocorrencia", Toast.LENGTH_LONG).show();
                     return;
+                }else if (descricao.length()>45) {
+                    soluçao.setError("No Maximo 45 caracteres ");
+                    //Toast.makeText(getApplicationContext(), "No Maximo 45 caracteres", Toast.LENGTH_LONG).show();
+                    return;
                 }
-                // Passa a resolucao e a data para o objeto
-                f.setReSolucao(descricao);
-                String y = (String) out.format(new Date());
-                f.setDataresolucao(y);
-                salvar();
-                troca.trocar(activity, OcorrenciasNovas_Activity.class);
+                new EnviarDados(activity,soluçao.getText().toString(),f.getId()).execute();
                 finish();
             }});
-
 
         // Ações ao clicar no botao voltar
       btvoltar_res.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            troca.trocar(activity, OcorrenciasNovas_Activity.class);
-            finish();
+           troca.trocar(activity, OcorrenciasNovas_Activity.class);
+           finish();
 
         }
       });
     }
-
-
-// ----------------------------M U D A R---Q U A N D O----C O N E C T A R---C O M---O---S E R V I D O R -------------------------------------------------------
-    public void salvar() {
-        Toast.makeText(getApplicationContext(), "Solução salva com sucesso", Toast.LENGTH_LONG).show(); // Mensagem ao usuario
-        Log.d("Teste", f.toStrings());
-    }
-// --------------------------------------------------------------------------------------------------------------------------------------------------
 
 }

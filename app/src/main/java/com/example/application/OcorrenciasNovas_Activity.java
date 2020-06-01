@@ -1,7 +1,6 @@
 package com.example.application;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -52,7 +51,6 @@ public class OcorrenciasNovas_Activity extends AppCompatActivity {
         sair = (Button) findViewById(R.id.bt_sair);
 
         ocorrencias = new ArrayList<Fato>(); // Cria a lista de fatos
-       // Toast.makeText(getApplicationContext(), "Carregando ", Toast.LENGTH_LONG).show(); // Mensagem ao usuario
         listagem.setVisibility(View.INVISIBLE);
         letsDoSomeNetworking(BASE_URL);
         new MinhaTask(this,progress,texto,listagem).execute();
@@ -116,6 +114,7 @@ public class OcorrenciasNovas_Activity extends AppCompatActivity {
 
 
 
+
 //Recebe os dados do Servidor
     public void  letsDoSomeNetworking(String url) {
         AsyncHttpClient client = new AsyncHttpClient();
@@ -130,11 +129,11 @@ public class OcorrenciasNovas_Activity extends AppCompatActivity {
             }
             @Override // Se der Errado
             public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
-                System.out.println("Request fail! Status code: " + statusCode);
+             /*   System.out.println("Request fail! Status code: " + statusCode);
                 System.out.println("Fail response: " + response);
-                System.out.println("Ocorrencia" + e.toString());
+                System.out.println("Ocorrencia" + e.toString());*/
                 Toast.makeText(getApplicationContext(), "Request fail! Status code: " + statusCode + "\nFail response: " + response + "\nOcorrencia" + e.toString(), Toast.LENGTH_LONG).show(); // Mensagem ao usuario
-                }
+                   }
         });
     }
 }

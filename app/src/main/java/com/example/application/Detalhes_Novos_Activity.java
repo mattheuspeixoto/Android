@@ -1,12 +1,10 @@
 package com.example.application;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Detalhes_Novos_Activity extends AppCompatActivity {
@@ -32,7 +30,6 @@ public class Detalhes_Novos_Activity extends AppCompatActivity {
 
         // Recebe o objeto passado pela outra tela
         f = getIntent().getExtras().getParcelable("Ocorrencia");
-        //Toast.makeText(getApplicationContext(), f.toStrings(),Toast.LENGTH_LONG).show();
 
         // Seta os valores nos campos da tela
         descricao.setText(f.getDescricao());
